@@ -1,5 +1,0 @@
-0.0.0.0:8000
-tls off
-
-root /schema-registry-ui
-log stdout

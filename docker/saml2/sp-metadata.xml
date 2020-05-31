@@ -1,0 +1,18 @@
+<EntityDescriptor xmlns="urn:oasis:names:tc:SAML:2.0:metadata" entityID="schema-registry">
+    <SPSSODescriptor AuthnRequestsSigned="true" WantAssertionsSigned="false"
+            protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol urn:oasis:names:tc:SAML:1.1:protocol http://schemas.xmlsoap.org/ws/2003/07/secext">
+        <KeyDescriptor use="signing">
+          <dsig:KeyInfo xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+            <dsig:X509Data>
+              <dsig:X509Certificate>MIICrTCCAZUCBgFyW4gdrjANBgkqhkiG9w0BAQsFADAaMRgwFgYDVQQDDA9zY2hlbWEtcmVnaXN0cnkwHhcNMjAwNTI4MTM0NDA2WhcNMzAwNTI4MTM0NTQ2WjAaMRgwFgYDVQQDDA9zY2hlbWEtcmVnaXN0cnkwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQCWhw3vfZdt4oUI+kLdtp/u8cXYgvdODGa/lsve5sXrYXuRlgzl25KM99NzBcgD3AFfTdNUz28NN8nlV06hIeCi9SYQ+/8EBQ43sXzm77BpErZDCD2AoISSprBv+R0PFhLRY8PBrXQMrkxGMXB9RikK2qkkVb2WyZYFAlFNbg4xwQXnb7n2MowAKWEfAVfOeXw6kdAyQJ27uqHIRTjStyY4tmhMlW8t/psE14gSXlQhwozEjZeTuAvBaDRkXvT82yk2IjQ1ODfWvJl1cA9NfoKNHITWXX4uylwLnA/C+w894r8AO98IEDk6AyaTcBEBgPFt78HsERjUhSQkpH1eHauxAgMBAAEwDQYJKoZIhvcNAQELBQADggEBAFeIO0yKSi3rSeLwSRbyXjiLug1zc8sTFSaXB78AUPb2GOcBbZFpum9pU9hk676YdPhG8+uXvDBOkmIsxKbgoQNuXlrPiRLe/QGNc+Q9BrgOPCQm2nAMC/l9e/tFMXkPp4NY2cSkK/aAiVeafx7u019GevYmMLVX+IX9eVnhFRp24V/vTYeGv5gTxSghM1qnKuHswTkzqj4ckSVE2NiNtJP71KjEx/tF1LhRxCFLzFsnIhbE3trsdl1y+xgZCGe8YE6p0us+NcXX8BR3DvfIylqGv9vPj+zL7O+JURTyR0CxoM7vK3qV4oaX87blqqP0nNbogNB1+FM5jn9Hwxcg/zw=</dsig:X509Certificate>
+            </dsig:X509Data>
+          </dsig:KeyInfo>
+        </KeyDescriptor>
+        <SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="http://127.0.0.1:8080/secure/logout"/>
+        <NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified
+        </NameIDFormat>
+        <AssertionConsumerService
+                Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="http://127.0.0.1:8080/secure/postResponse"
+                index="1" isDefault="true" />
+    </SPSSODescriptor>
+</EntityDescriptor>

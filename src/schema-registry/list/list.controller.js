@@ -1,10 +1,16 @@
 var angular = require('angular');
 var angularAPP = angular.module('angularAPP');
 
-var SubjectListCtrl = function ($scope, $rootScope, $log, $mdMedia, SchemaRegistryFactory, env) {
+var SubjectListCtrl = function ($scope, $rootScope, $log, $mdMedia, SchemaRegistryFactory, env, AuthorizationFactory) {
 
   $log.info("Starting schema-registry controller : list ( initializing subject cache )");
   $scope.readonlyMode = env.readonlyMode();
+
+  AuthorizationFactory.isAuthorized("newSchema","").then(
+    function success(isAuthorized) {
+      $scope.newSchemaAuthorized = isAuthorized;
+    }
+  );
 
   function addCompatibilityValue() {
     angular.forEach($rootScope.allSchemas, function (schema) {
@@ -62,7 +68,7 @@ var SubjectListCtrl = function ($scope, $rootScope, $log, $mdMedia, SchemaRegist
   Math.floor(itemsPerPage) < 3 ? $scope.itemsPerPage = 3 : $scope.itemsPerPage = Math.floor(itemsPerPage);
 };
 
-SubjectListCtrl.$inject = ['$scope', '$rootScope', '$log', '$mdMedia', 'SchemaRegistryFactory', 'env'];
+SubjectListCtrl.$inject = ['$scope', '$rootScope', '$log', '$mdMedia', 'SchemaRegistryFactory', 'env', ', AuthorizationFactory'];
 
 angularAPP.controller('SubjectListCtrl', SubjectListCtrl);
 

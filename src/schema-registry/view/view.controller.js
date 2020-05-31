@@ -9,7 +9,7 @@ require.context("brace/ext/", false);
 //var Range = ace.acequire('ace/range').Range;
 
 
-var SubjectsCtrl = function ($rootScope, $scope, $route, $routeParams, $log, $location, $mdDialog, SchemaRegistryFactory, UtilsFactory, toastFactory, Avro4ScalaFactory, env) {
+var SubjectsCtrl = function ($rootScope, $scope, $route, $routeParams, $log, $location, $mdDialog, SchemaRegistryFactory, UtilsFactory, toastFactory, Avro4ScalaFactory, env, AuthorizationFactory) {
 
   $log.info("Starting schema-registry controller: view ( " + $routeParams.subject + "/" + $routeParams.version + " )");
   $rootScope.listChanges = false;
@@ -25,6 +25,25 @@ var SubjectsCtrl = function ($rootScope, $scope, $route, $routeParams, $log, $lo
       //$log.warn(JSON.stringify($scope.completeSubjectHistory));
     }
   );
+
+  AuthorizationFactory.isAuthorized("write",$routeParams.subject).then(
+    function success(isAuthorized) {
+      $scope.editAuthorized = isAuthorized;
+    }
+  );
+
+  AuthorizationFactory.isAuthorized("delete",$routeParams.subject).then(
+    function success(isAuthorized) {
+      $scope.deleteAuthorized = isAuthorized;
+    }
+  );
+
+  AuthorizationFactory.isAuthorized("writeCompatibility",$routeParams.subject).then(
+    function success(isAuthorized) {
+      $scope.writeCompatibilityAuthorized = isAuthorized;
+    }
+  );
+
   $scope.allowSchemaDeletion = env.allowSchemaDeletion();
   $scope.readonlyMode = env.readonlyMode();
   $scope.allowTransitiveCompatibilities = env.allowTransitiveCompatibilities();
@@ -340,7 +359,7 @@ var SubjectsCtrl = function ($rootScope, $scope, $route, $routeParams, $log, $lo
 
 };
 
-SubjectsCtrl.$inject = ['$rootScope', '$scope', '$route', '$routeParams', '$log', '$location', '$mdDialog', 'SchemaRegistryFactory', 'UtilsFactory', 'toastFactory', 'Avro4ScalaFactory', 'env']
+SubjectsCtrl.$inject = ['$rootScope', '$scope', '$route', '$routeParams', '$log', '$location', '$mdDialog', 'SchemaRegistryFactory', 'UtilsFactory', 'toastFactory', 'Avro4ScalaFactory', 'env', 'AuthorizationFactory']
 
 angularAPP.controller('SubjectsCtrl', SubjectsCtrl); //end of controller
 

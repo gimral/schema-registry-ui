@@ -1,5 +1,6 @@
 #!/bin/sh
 
+PROXY="true"
 PROXY_SKIP_VERIFY="${PROXY_SKIP_VERIFY:-false}"
 INSECURE_PROXY=""
 ALLOW_GLOBAL="${ALLOW_GLOBAL:-false}"
@@ -21,24 +22,10 @@ PORT="${PORT:-8000}"
         echo "Unsecure: won't verify proxy certicate chain."
     fi
 
-    # fix for certain installations
-    cat /caddy/Caddyfile.template \
-        | sed -e "s/8000/$PORT/" > /tmp/Caddyfile
-
-    if echo $PROXY | egrep -sq "true|TRUE|y|Y|yes|YES|1" \
-            && [[ ! -z "$SCHEMAREGISTRY_URL" ]]; then
-        echo "Enabling proxy."
-        cat <<EOF >>/tmp/Caddyfile
-proxy /api/schema-registry $SCHEMAREGISTRY_URL {
-    without /api/schema-registry
-    $INSECURE_PROXY
-}
-EOF
-        if echo "$RELATIVE_PROXY_URL" | egrep -sq "true|TRUE|y|Y|yes|YES|1"; then
-            SCHEMAREGISTRY_URL=api/schema-registry
-        else
-            SCHEMAREGISTRY_URL=/api/schema-registry
-        fi
+    if echo "$RELATIVE_PROXY_URL" | egrep -sq "true|TRUE|y|Y|yes|YES|1"; then
+        SCHEMAREGISTRY_URL=api/schema-registry
+    else
+        SCHEMAREGISTRY_URL=/api/schema-registry
     fi
 
     if echo "$ALLOW_TRANSITIVE" | egrep -sq "true|TRUE|y|Y|yes|YES|1"; then
@@ -79,13 +66,6 @@ var clusters = [
 EOF
     fi
 
-    if [[ -n "${CADDY_OPTIONS}" ]]; then
-        echo "Applying custom options to Caddyfile"
-        cat <<EOF >>/tmp/Caddyfile
-$CADDY_OPTIONS
-EOF
-    fi
-
     # Here we emulate the output by Caddy. Why? Because we can't
     # redirect caddy to stderr as the logging would also get redirected.
     cat <<EOF
@@ -98,5 +78,3 @@ Activating privacy features... done.
 http://0.0.0.0:$PORT
 EOF
 } 1>&2
-
-exec /caddy/caddy -conf /tmp/Caddyfile -quiet
