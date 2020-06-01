@@ -51,20 +51,20 @@ RUN npm run build-prod
 
 
 
-FROM httpd:2.4.43
+FROM soarinferret/mod_auth_mellon:0.16.0-debian
 
 ARG SCHEMAREGISTRY_URL=http://host.docker.internal:5051/
 ENV SCHEMAREGISTRY_URL $SCHEMAREGISTRY_URL
 
-RUN set -eux; \
-    apt-get update; \
-    apt-get install -y --no-install-recommends \
-            wget \
-            openssl \
-            liblasso3 \
-            libapache2-mod-auth-mellon
+# RUN set -eux; \
+#     apt-get update; \
+#     apt-get install -y --no-install-recommends \
+#             wget \
+#             openssl \
+#             liblasso3 \
+#             libapache2-mod-auth-mellon
 
-RUN apt install -y php libapache2-mod-php
+# RUN apt install -y php libapache2-mod-php
 
 COPY ./docker/html/ /usr/local/apache2/htdocs/
 
