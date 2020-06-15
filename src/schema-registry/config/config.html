@@ -4,8 +4,8 @@
             <b>Url :</b> {{schemaRegistryURL}}
             <span ng-show="connectionFailure" style="color:red">CONNECTIVITY ERROR</span><br>
             <b>Global Compatibility level :</b>
-            <select ng-show="allowChanges && config.compatibilityLevel" ng-model='form' required ng-options='option as option for option in globalConfigOpts'></select>
-            <span ng-hide="allowChanges ">{{config.compatibilityLevel}}</span>
+            <select ng-show="allowChanges && writeConfigAuthorized && config.compatibilityLevel" ng-model='form' required ng-options='option as option for option in globalConfigOpts'></select>
+            <span ng-hide="allowChanges && writeConfigAuthorized">{{config.compatibilityLevel}}</span>
             <md-button class="green md-small" style="padding: 0px 6px; line-height: 1.2;" ng-hide="form == config.compatibilityLevel" ng-click="updateGlobalConfig(form, $event);">change</md-button>
             <br>
             <b>schema-registry-ui:</b> 0.9.5

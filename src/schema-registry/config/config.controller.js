@@ -19,6 +19,12 @@ var SchemaRegistryConfigCtrl = function ($scope, $http, $log, $mdDialog, SchemaR
       $scope.globalConfigOpts.push("FULL_TRANSITIVE", "FORWARD_TRANSITIVE", "BACKWARD_TRANSITIVE");
     }
 
+    AuthorizationFactory.isAuthorized("writeConfig","").then(
+      function success(isAuthorized) {
+        $scope.writeConfigAuthorized = isAuthorized;
+      }
+    );
+
     SchemaRegistryFactory.getGlobalConfig().then(
       function success(config) {
         $scope.allowChanges = !env.readonlyMode() && env.allowGlobalConfigChanges();
@@ -27,8 +33,10 @@ var SchemaRegistryConfigCtrl = function ($scope, $http, $log, $mdDialog, SchemaR
         $scope.form = $scope.config.compatibilityLevel;
       },
       function failure(response) {
-        $log.error("Failure with : " + JSON.stringify(response));
-        $scope.connectionFailure = true;
+        if(!response.endsWith("401")){
+          $log.error("Failure with : " + JSON.stringify(response));
+          $scope.connectionFailure = true;
+        }
       });
   }, true);
 
