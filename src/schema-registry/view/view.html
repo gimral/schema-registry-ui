@@ -84,7 +84,7 @@
           <i class="fa fa-ban ng-scope" aria-hidden="true"></i>
             CANCEL
         </md-button>
-        <md-menu d-position-mode="target-right target" ng-if="!isAvroAceEditable && allowSchemaDeletion && !readonlyMode && !deleteAuthorized">
+        <md-menu d-position-mode="target-right target" ng-if="!isAvroAceEditable && allowSchemaDeletion && !readonlyMode && deleteAuthorized">
           <md-button ng-click="$mdOpenMenu($event)">
               <i class="fa fa-trash" aria-hidden="true"></i>
             DELETE
