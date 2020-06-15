@@ -1,7 +1,7 @@
 var angular = require('angular');
 var angularAPP = angular.module('angularAPP');
 
-var SchemaRegistryConfigCtrl = function ($scope, $http, $log, $mdDialog, SchemaRegistryFactory, env) {
+var SchemaRegistryConfigCtrl = function ($scope, $http, $log, $mdDialog, SchemaRegistryFactory, env, AuthorizationFactory) {
 
   $log.info("Starting schema-registry controller");
   $scope.config = {};
