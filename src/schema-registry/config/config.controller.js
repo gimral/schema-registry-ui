@@ -96,6 +96,6 @@ var SchemaRegistryConfigCtrl = function ($scope, $http, $log, $mdDialog, SchemaR
 
 };
 
-SchemaRegistryConfigCtrl.$inject = ['$scope', '$http', '$log', '$mdDialog', 'SchemaRegistryFactory', 'env'];
+SchemaRegistryConfigCtrl.$inject = ['$scope', '$http', '$log', '$mdDialog', 'SchemaRegistryFactory', 'env', 'AuthorizationFactory'];
 
 angularAPP.controller('SchemaRegistryConfigCtrl', SchemaRegistryConfigCtrl);
