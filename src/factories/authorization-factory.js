@@ -57,6 +57,9 @@ var AuthorizationFactory = function ($rootScope, $http, $location, $q, $log, Uti
     }
 
     return{
+        loadCache: function(){
+            return getUserPermissionsFromServer();
+        },
         isAuthorized: function(privilegeName, resourceName){return isAuthorized(privilegeName, resourceName);}
     }
 }

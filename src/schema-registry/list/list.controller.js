@@ -53,6 +53,7 @@ var SubjectListCtrl = function ($scope, $rootScope, $log, $mdMedia, SchemaRegist
    */
   function loadCache() {
     $rootScope.allSchemas = [];
+    var authPromise  = AuthorizationFactory.loadCache();
     var promise = SchemaRegistryFactory.refreshLatestSubjectsCACHE();
     promise.then(function (cachedData) {
       $rootScope.allSchemas = cachedData;
