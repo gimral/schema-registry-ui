@@ -15,17 +15,6 @@ var AuthorizationFactory = function ($rootScope, $http, $location, $q, $log, Uti
             .error(function (data, status) {
                 deferred.reject("No user info found.")
             });
-        // var permissions = [
-        //     {
-        //         privilege: "write",
-        //         resources: ["Test","test2"]
-        //     },
-        //     {
-        //         privilege: "writeCompatibility",
-        //         resources: ["test2"]
-        //     }
-        // ];
-        // deferred.resolve(permissions);
         return deferred.promise;
     }
     function extractResources(requiredPrivilege){
@@ -56,10 +45,12 @@ var AuthorizationFactory = function ($rootScope, $http, $location, $q, $log, Uti
         var deferred = $q.defer();
         getUserPermissions(privilegeName).then(
             function success(permittedResources) {
+                if(permittedResources.includes("*"))
+                    deferred.resolve(true);
                 if(permittedResources.includes(resourceName))
                     deferred.resolve(true);
                 else
-                    deferred.resolve(false);;
+                    deferred.resolve(false);
             }
         );
         return deferred.promise;
